@@ -1,0 +1,39 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+
+<suite name="Parallel Suite All" verbose="1" parallel="tests">
+
+    <!--chạy tuần tự những @Test-->
+
+<!--    <test name="Regression Test Parallel" parallel="classes">-->
+<!--        <classes>-->
+<!--            <class name="org.parallel._1ParallelExecution.ParallelTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+<!--    <test name="Regression Test Parallel 2" parallel="classes">-->
+<!--        <classes>-->
+<!--            <class name="org.parallel._1ParallelExecution.ParallelTest2"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+    <!--chạy tuần tự những @Test (tong =8)-->
+
+
+    <test name="Regression Test Parallel" parallel="classes">
+        <classes>
+            <class name="org.parallel._1ParallelExecution.ParallelTest"/>
+            <class name="org.parallel._1ParallelExecution.ParallelTest2"/>
+        </classes>
+    </test>
+
+    <test name="Regression Test Parallel 2" parallel="classes">
+        <classes>
+            <class name="org.parallel._1ParallelExecution.ParallelTest"/>
+            <class name="org.parallel._1ParallelExecution.ParallelTest2"/>
+        </classes>
+    </test>
+
+
+
+</suite>

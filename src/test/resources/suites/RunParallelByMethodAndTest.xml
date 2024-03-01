@@ -1,0 +1,20 @@
+
+<!--Chạy song song 2 test 2 method-->
+
+        <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Parallel Suite All" verbose="1" parallel="tests">
+
+<test name="Regression Test Parallel" parallel="methods">
+    <classes>
+        <class name="org.parallel._1ParallelExecution.ParallelTest"/>
+    </classes>
+</test>
+
+<test name="Regression Test Parallel 2" parallel="methods">
+    <classes>
+        <class name="org.parallel._1ParallelExecution.ParallelTest2"/>
+    </classes>
+</test>
+
+</suite>
