@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Parallel Suite All" verbose="1">
+    <test name="Regression Test Parallel" parallel="methods">
+        <classes>
+            <class name="org.parallel._2ParallelExecutionCustomDriver.testcases.LoginTest"/>
+            <class name="org.parallel._2ParallelExecutionCustomDriver.testcases.DashboardTest"/>
+        </classes>
+    </test>
+</suite>
