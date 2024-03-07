@@ -19,5 +19,9 @@ public class DemoReadPropertiesFiles {
         //Gộp nhiều file
         System.out.println(PropertiesHelper.getValue("key1"));
         System.out.println(PropertiesHelper.getValue("key2"));
+
+        //Set file
+        PropertiesHelper.setFile("src/test/resources/configs/configs.properties");
+        PropertiesHelper.setValue("message", "Add Customer Successfully");
     }
 }
