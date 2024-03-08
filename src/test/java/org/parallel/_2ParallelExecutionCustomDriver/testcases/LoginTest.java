@@ -4,6 +4,7 @@ import org.parallel._2ParallelExecutionCustomDriver.pages.DashboardPage;
 import org.parallel._2ParallelExecutionCustomDriver.pages.LoginPage;
 import org.parallel.common.BaseTest;
 import org.parallel.constants.ConfigData;
+import org.parallel.dataprovider.DataProviderFactory;
 import org.parallel.keywords.WebUI;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -13,18 +14,18 @@ public class LoginTest extends BaseTest {
     LoginPage loginPage;
     DashboardPage dashboardPage;
 
-    @Test
-    public void loginSuccess(){
+    @Test(dataProvider = "DataLoginSuccess", dataProviderClass = DataProviderFactory.class)
+    public void loginSuccess(String email, String password){
         loginPage = new LoginPage();
-        dashboardPage = loginPage.loginCRM(ConfigData.email, ConfigData.password);
+        dashboardPage = loginPage.loginCRM(email, password);
         loginPage.verifyLoginSuccess();
         WebUI.captureScreenImage("testLogin");
         dashboardPage.logOut();
     }
-    @Test
-    public void testLoginWithEmailInvalid(){
+    @Test(dataProvider = "DataLoginFail", dataProviderClass = DataProviderFactory.class)
+    public void testLoginWithEmailInvalid(String email, String password){
         loginPage = new LoginPage();
-        dashboardPage = loginPage.loginCRM("admin@email.com", "123456");
+        dashboardPage = loginPage.loginCRM(email, password);
         loginPage.verifyLoginFail();
         WebUI.captureScreenImage("testLogin");
     }
