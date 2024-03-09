@@ -4,7 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.parallel.drivers.DriverManager;
+import org.parallel.helpers.CaptureHelper;
 import org.parallel.helpers.PropertiesHelper;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 public class BaseTest {
@@ -58,7 +60,17 @@ public class BaseTest {
     }
 
     @AfterMethod
-    public void closeDriver() {
+//    public void closeDriver() {
+//        DriverManager.quit();
+//    }
+    public void closeDriver(ITestResult iTestResult) {
+        //Chụp màn hình khi test case fail
+        if (ITestResult.FAILURE == iTestResult.getStatus()){
+            CaptureHelper.takeScreenshot(iTestResult.getName());
+        }
+
+        CaptureHelper.stopRecord();
+
         DriverManager.quit();
     }
 
