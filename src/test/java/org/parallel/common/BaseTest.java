@@ -6,9 +6,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.parallel.drivers.DriverManager;
 import org.parallel.helpers.CaptureHelper;
 import org.parallel.helpers.PropertiesHelper;
+import org.parallel.listener.TestListener;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
+@Listeners(TestListener.class)
 public class BaseTest {
 
     @BeforeSuite
@@ -60,17 +62,7 @@ public class BaseTest {
     }
 
     @AfterMethod
-//    public void closeDriver() {
-//        DriverManager.quit();
-//    }
-    public void closeDriver(ITestResult iTestResult) {
-        //Chụp màn hình khi test case fail
-        if (ITestResult.FAILURE == iTestResult.getStatus()){
-            CaptureHelper.takeScreenshot(iTestResult.getName());
-        }
-
-        CaptureHelper.stopRecord();
-
+    public void closeDriver() {
         DriverManager.quit();
     }
 

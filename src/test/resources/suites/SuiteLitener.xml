@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite">
+
+    <listeners>
+        <listener class-name="org.parallel.listener.TestListener"></listener>
+    </listeners>
+
+    <test name="Test">
+        <classes>
+            <class name="org.parallel._7ITestListener.testcases.LoginTest">
+            </class>
+        </classes>
+    </test>
+</suite>
