@@ -7,6 +7,7 @@ import org.parallel.drivers.DriverManager;
 import org.parallel.helpers.CaptureHelper;
 import org.parallel.helpers.PropertiesHelper;
 import org.parallel.listener.TestListener;
+import org.parallel.utils.LogUtils;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -22,6 +23,7 @@ public class BaseTest {
     @BeforeMethod
     @Parameters({"browser"})
     public void createDriver(@Optional("chrome") String browserName) {
+        LogUtils.info("create Driver");
         WebDriver driver = setupBrowser(browserName);//Khởi tạo loại Driver
 //        new WebUI(driver);
         DriverManager.setDriver(driver);//Mang giá trị Driver vào ThreadLocal
@@ -38,7 +40,7 @@ public class BaseTest {
                 driver = initEdgeDriver();
                 break;
             default:
-                System.out.println("Browser: " + browserName + " is invalid, Launching Chrome as browser of choice...");
+                LogUtils.info("Browser: " + browserName + " is invalid, Launching Chrome as browser of choice...");
                 driver = initChromeDriver();
         }
         return driver;
@@ -47,7 +49,7 @@ public class BaseTest {
     // Viết các hàm khởi chạy cho từng Browser đó
     private WebDriver initChromeDriver() {
         WebDriver driver; //Khai báo Driver cục bộ
-        System.out.println("Launching Chrome browser...");
+        LogUtils.info("Launching Chrome browser...");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         return driver;
@@ -55,7 +57,7 @@ public class BaseTest {
 
     private WebDriver initEdgeDriver() {
         WebDriver driver; //Khai báo Driver cục bộ (tạm thời)
-        System.out.println("Launching Edge browser...");
+        LogUtils.info("Launching Edge browser...");
         driver = new EdgeDriver();
         driver.manage().window().maximize();
         return driver;

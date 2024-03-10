@@ -17,7 +17,6 @@ public class LoginTest extends BaseTest {
         loginPage = new LoginPage();
         dashboardPage = loginPage.loginCRM(email, password);
         loginPage.verifyLoginSuccess();
-//        WebUI.captureScreenImage("testLogin");
         dashboardPage.logOut();
     }
 
@@ -26,7 +25,6 @@ public class LoginTest extends BaseTest {
         loginPage = new LoginPage();
         dashboardPage = loginPage.loginCRM(email, password);
         loginPage.verifyLoginFail();
-//        WebUI.captureScreenImage("testLogin");
     }
 
 //    @Test
