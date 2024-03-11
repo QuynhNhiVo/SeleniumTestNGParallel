@@ -27,11 +27,11 @@ public class LoginTest extends BaseTest {
         loginPage.verifyLoginFail();
     }
 
-//    @Test
-//    public void testLoginWithPasswordInvalid(){
-//        loginPage = new LoginPage();
-//        dashboardPage = loginPage.loginCRM("admin@example.com", "12456");
-//        loginPage.verifyLoginFail();
-//        WebUI.captureScreenImage("testLogin");
-//    }
+    @Test
+    public void testLoginWithPasswordInvalid(){
+        loginPage = new LoginPage();
+        dashboardPage = loginPage.loginCRM("admin@example.com", "12456");
+        loginPage.verifyLoginFail();
+        WebUI.captureScreenImage("testLogin");
+    }
 }

@@ -17,7 +17,7 @@ public class DataProviderFactory {
         return data;
     }
 
-    @DataProvider(name = "DataLoginFail", parallel = true)
+    @DataProvider(name = "DataLoginFail", parallel = false)
     public Object[][] dataLoginFail(){
         return new Object[][]{
                 {"admin@email.com", "123456"},

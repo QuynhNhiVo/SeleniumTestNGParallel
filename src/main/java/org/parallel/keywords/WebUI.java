@@ -1,11 +1,16 @@
 package org.parallel.keywords;
 
+import com.aventstack.extentreports.Status;
+import io.qameta.allure.Step;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.parallel.drivers.DriverManager;
+import org.parallel.reports.AllureReportManager;
+import org.parallel.reports.ExtentTestManager;
 import org.parallel.utils.LogUtils;
 import org.testng.Assert;
 
@@ -56,15 +61,19 @@ public class WebUI {
         LogUtils.info(message);
     }
 
+    @Step("Open URL: {0}")//index
     public static void openURL(String url) {
         DriverManager.getDriver().get(url);
         logConsole("Open: " + url);
+        ExtentTestManager.logMessage(Status.INFO, "Open: " + url);
     }
 
+    @Step("Click Element {0}")
     public static void clickElement(By by) {
         WebUI.waitForElementClickable(by);
         getWebElement(by).click();
         logConsole("Click on Element: " + by);
+        ExtentTestManager.logMessage(Status.INFO, "Click on Element: " + by);
     }
 
     public static void clickElement(By by, int second) {
@@ -74,10 +83,14 @@ public class WebUI {
 
     }
 
+    @Step("Set text {1} on element {0}")//by index =0, text index =1
     public static void setText(By by, String text) {
         WebUI.waitForElementVisible(by);
         getWebElement(by).sendKeys(text);
         logConsole("Set text on element: " + by + " Text: " + text);
+        ExtentTestManager.logMessage(Status.INFO, "Set text on element: " + by + " Text: " + text);
+
+        AllureReportManager.saveTextLog("Set text on element: " + by + " Text: " + text);
     }
 
     public static void setText(By by, String text, int second) {
@@ -86,10 +99,14 @@ public class WebUI {
         logConsole("Set text on element: " + by + " Timeout: " + second + "(second)." + " Text: " + text);
     }
 
+    @Step("Get text element {0}")
     public static String getElementText(By by) {
         WebUI.waitForElementVisible(by);
         String text = DriverManager.getDriver().findElement(by).getText();
         logConsole("Get text of element: " + by + " is: " + text);
+        ExtentTestManager.logMessage(Status.INFO, "Get text of element: " + by + " is: " + text);
+
+        AllureReportManager.saveTextLog("Get text of element: " + by + " is: " + text);
         return text; //Trả về một giá trị kiểu String
     }
 
@@ -97,6 +114,7 @@ public class WebUI {
         WebUI.waitForElementVisible(by);
         String value = DriverManager.getDriver().findElement(by).getAttribute(attributeName);
         logConsole("Get attribute of element: " + by + " value is: " + value);
+        ExtentTestManager.logMessage(Status.INFO, "Get attribute of element: " + by + " value is: " + value);
         return value; //Trả về một giá trị kiểu String
     }
 
@@ -193,10 +211,12 @@ public class WebUI {
         LogUtils.info("Set text: " + value + "Set Key: " + key.name() + " on element " + by);
     }
 
+    @Step("Set key {1} on element {0}")
     public static void setKey(By by, Keys key) {
         waitForPageLoaded();
         getWebElement(by).sendKeys(key);
         LogUtils.info("Set Key: " + key.name() + " on element " + by);
+        ExtentTestManager.logMessage(Status.INFO, "Set Key: " + key.name() + " on element " + by);
     }
 
     public static void scrollToElement(By element) {
