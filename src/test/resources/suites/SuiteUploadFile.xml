@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite Parallel Login Test" verbose="1" parallel="tests">
+
+    <test name="Regression Parallel CUSTOMER TEST Edge headless" parallel="methods">
+        <parameter name="browser" value="chrome"></parameter>
+        <classes>
+            <class name="org.parallel._9UploadFile.DemoRobotClass"/>
+        </classes>
+    </test>
+
+</suite>

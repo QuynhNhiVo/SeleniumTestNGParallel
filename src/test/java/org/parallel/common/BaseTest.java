@@ -2,7 +2,9 @@ package org.parallel.common;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.parallel.drivers.DriverManager;
 import org.parallel.helpers.CaptureHelper;
 import org.parallel.helpers.PropertiesHelper;
@@ -50,7 +52,11 @@ public class BaseTest {
     private WebDriver initChromeDriver() {
         WebDriver driver; //Khai báo Driver cục bộ
         LogUtils.info("Launching Chrome browser...");
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        if(PropertiesHelper.getValue("HEADLESS").equals("true")){
+            options.addArguments("--headless");
+        }
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         return driver;
     }
@@ -58,7 +64,11 @@ public class BaseTest {
     private WebDriver initEdgeDriver() {
         WebDriver driver; //Khai báo Driver cục bộ (tạm thời)
         LogUtils.info("Launching Edge browser...");
-        driver = new EdgeDriver();
+        EdgeOptions options = new EdgeOptions();
+        if(PropertiesHelper.getValue("HEADLESS").equals("true")){
+            options.addArguments("--headless");
+        }
+        driver = new EdgeDriver(options);
         driver.manage().window().maximize();
         return driver;
     }

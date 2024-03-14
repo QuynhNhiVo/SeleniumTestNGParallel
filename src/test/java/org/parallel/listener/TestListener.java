@@ -42,8 +42,10 @@ public class TestListener implements ITestListener {
         // TODO Auto-generated method stub
         LogUtils.info("********on Test Start: " + result.getName() + "********");
 
-        CaptureHelper.startRecord(result.getName());
-        ExtentTestManager.saveToReport(getTestName(result), getTestDescription(result));
+        if(PropertiesHelper.getValue("VIDEO_RECORD").equals("true")){
+            CaptureHelper.startRecord(result.getName());
+            ExtentTestManager.saveToReport(getTestName(result), getTestDescription(result));
+        }
     }
 
     @Override
@@ -51,8 +53,9 @@ public class TestListener implements ITestListener {
         // TODO Auto-generated method stub
         LogUtils.info("==> " + result.getName() + " Test Success: ");
 //        CaptureHelper.takeScreenshot(result.getName());
-
-        CaptureHelper.stopRecord();
+        if(PropertiesHelper.getValue("VIDEO_RECORD").equals("true")) {
+            CaptureHelper.stopRecord();
+        }
         ExtentTestManager.logMessage(Status.PASS, result.getName() + " is passed.");
     }
 
@@ -60,9 +63,13 @@ public class TestListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
         // TODO Auto-generated method stub
         LogUtils.info("==> " + result.getName() + " Test Failure: ");
-        CaptureHelper.takeScreenshot(result.getName());
+        if(PropertiesHelper.getValue("SCREENSHOT_FAIL").equals("true")){
+            CaptureHelper.takeScreenshot(result.getName());
+        }
 
-        CaptureHelper.stopRecord();
+        if(PropertiesHelper.getValue("VIDEO_RECORD").equals("true")) {
+            CaptureHelper.stopRecord();
+        }
         ExtentTestManager.addScreenShot(result.getName());
         ExtentTestManager.logMessage(Status.FAIL, result.getThrowable().toString());
         ExtentTestManager.logMessage(Status.FAIL, result.getName() + " is failed.");
@@ -78,7 +85,9 @@ public class TestListener implements ITestListener {
         LogUtils.warn("on Test Skipped: " + result.getName());
 //        CaptureHelper.takeScreenshot(result.getName());
 
-        CaptureHelper.stopRecord();
+        if(PropertiesHelper.getValue("VIDEO_RECORD").equals("true")) {
+            CaptureHelper.stopRecord();
+        }
         ExtentTestManager.logMessage(Status.SKIP, result.getThrowable().toString());
     }
 

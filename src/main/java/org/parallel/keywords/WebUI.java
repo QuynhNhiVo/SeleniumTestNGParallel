@@ -46,7 +46,13 @@ public class WebUI {
     public static Boolean checkElementDisplay(By by) {
         WebUI.waitForElementVisible(by);
         boolean check = getWebElement(by).isDisplayed();
-        return check;
+        if(check){
+            LogUtils.info("Element: " +by+" is Display");
+            return check;
+        }else {
+            LogUtils.info("Element: " +by+" is not Display");
+            return false;
+        }
     }
 
     public static WebElement getWebElement(By by) {
