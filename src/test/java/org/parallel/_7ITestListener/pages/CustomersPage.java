@@ -1,10 +1,16 @@
 package org.parallel._7ITestListener.pages;
 
+import org.apache.poi.util.Internal;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.parallel.drivers.DriverManager;
 import org.parallel.keywords.WebUI;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+
+import java.util.List;
 
 public class CustomersPage {
 
@@ -35,6 +41,7 @@ public class CustomersPage {
     private By inputCountry = By.xpath("//button[@data-id='country']/following-sibling::div//input");
     private By btnSavencreate = By.xpath("//button[normalize-space()='Save and create contact']");
     private By btnSaveCustomer = By.xpath("//div[@id='profile-save-section']//button[normalize-space()='Save']");
+    private By pageTotal = By.xpath("//div[@id='clients_info']");
 
 
     public void verifyHeaderCustomerPage() {
@@ -82,5 +89,52 @@ public class CustomersPage {
         softAssert.assertEquals(WebUI.getElementAttribute(inputPhone,"value"), "99999999", "Phone incorrect");
         softAssert.assertEquals(WebUI.getElementAttribute(inputWebsite,"value"), "https://anhtester.com", "Website incorrect");
         softAssert.assertAll();
+    }
+
+    public void searchCustomer(String customer_Name) {
+        WebUI.setText(inputSearchCustomer,customer_Name);
+        WebUI.sleep(1);
+    }
+
+    public int checkPageTotal(int total){
+        String pageTotalText = WebUI.getElementText(pageTotal);
+        String pageTotalNumber1[] = pageTotalText.split("");
+        String pageTotalNumber = pageTotalText.split(" ")[3];
+        System.out.println("Check page total: " + pageTotalNumber);
+        System.out.println("Check page total (array): " + pageTotalNumber1);
+
+        WebUI.assertEquals(Integer.parseInt(pageTotalNumber), total, "Number expect not equal number actual");
+
+        return Integer.parseInt(pageTotalNumber);
+    }
+
+    public int checkPageTotal(){
+        String pageTotalText = WebUI.getElementText(pageTotal);
+        String pageTotalNumber = pageTotalText.split(" ")[3];
+        System.out.println("Check page total: " + pageTotalNumber);
+
+        return Integer.parseInt(pageTotalNumber);
+    }
+
+    public void checkSeachTableByColumn(int column, String value){
+
+        //Xác định số dòng của table sau khi search
+        List<WebElement> row = DriverManager.getDriver().findElements(By.xpath("//table//tbody/tr"));
+        int rowTotal = row.size(); //Lấy ra số dòng
+        System.out.println("Số dòng tìm thấy: " + rowTotal);
+
+        WebUI.assertEquals(rowTotal, checkPageTotal(), "The page total not equal record total");
+        //Duyệt từng dòng
+        for (int i = 1; i <= rowTotal; i++) {
+            WebElement elementCheck = DriverManager.getDriver().findElement(By.xpath("//table//tbody/tr[" + i + "]/td[" + column + "]"));
+
+            JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+            js.executeScript("arguments[0].scrollIntoView(true);", elementCheck);
+
+            System.out.print(value + " - ");
+            System.out.println(elementCheck.getText());
+            Assert.assertTrue(elementCheck.getText().toUpperCase().contains(value.toUpperCase()), "Dòng số " + i + " không chứa giá trị tìm kiếm.");
+        }
+
     }
 }
